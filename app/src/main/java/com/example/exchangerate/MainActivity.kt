@@ -2,12 +2,42 @@ package com.example.exchangerate
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private var disposable: Disposable? = null
+    private val service by lazy {
+        Service.create()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        print("here")
+
+        disposable = service.getLatest(getString(R.string.key), "RUB,USD")
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { result ->
+                    eur.text = result.rates.RUB.toString()
+                    usd.text = (result.rates.RUB / result.rates.USD).toString()
+                },
+                { error -> print("error") }
+            )
+        /*disposable = service.getSymbols(getString(R.string.key))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { result ->
+                    eur.text = result.symbols
+                },
+                { error ->
+                    print("error")
+                }
+            )*/
     }
 }
