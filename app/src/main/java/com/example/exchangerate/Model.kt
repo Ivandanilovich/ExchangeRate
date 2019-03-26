@@ -1,7 +1,7 @@
 package com.example.exchangerate
 
 object Model {
-    data class Result(val rates: Rate)
+    data class Result(val rates: Rate, val date: String)
     data class Rate(
         val RUB: Double,
         val USD: Double

@@ -7,9 +7,6 @@ import kotlinx.android.synthetic.main.activity_rate.*
 
 class RateActivity : AppCompatActivity() {
 
-//    var reAdapter:
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rate)

@@ -26,20 +26,10 @@ class MainActivity : AppCompatActivity() {
                 { result ->
                     eur.text = result.rates.RUB.toString()
                     usd.text = (result.rates.RUB / result.rates.USD).toString()
+                    date.text = result.date
                 },
                 { error -> print("error") }
             )
-        /*disposable = service.getSymbols(getString(R.string.key))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { result ->
-                    eur.text = result.symbols
-                },
-                { error ->
-                    print("error")
-                }
-            )*/
 
         RateLayout.setOnClickListener {
             val intent = Intent(this, RateActivity::class.java)
