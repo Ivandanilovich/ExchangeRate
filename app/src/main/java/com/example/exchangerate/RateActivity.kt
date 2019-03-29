@@ -76,6 +76,9 @@ class RateActivity : AppCompatActivity() {
             RateModel("eeeeee", "sdfaer", 1.1, true, 0, 12.22, false)
         )
         var adapter = DataAdapter(this, rates)
+
+        dateText.text = intent.extras["date"].toString()
+
         rateRecyclerView.adapter = adapter
         print("here")
     }

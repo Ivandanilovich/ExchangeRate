@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
         Service.create()
     }
 
+    var currentDate: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,14 +28,21 @@ class MainActivity : AppCompatActivity() {
                 { result ->
                     eur.text = result.rates.RUB.toString()
                     usd.text = (result.rates.RUB / result.rates.USD).toString()
-                    date.text = result.date
+                    currentDate = reBuild(result.date)
+                    date.text = currentDate
                 },
                 { error -> print("error") }
             )
 
         RateLayout.setOnClickListener {
             val intent = Intent(this, RateActivity::class.java)
+            intent.putExtra("date", currentDate)
             startActivity(intent)
         }
+    }
+
+    private fun reBuild(date: String): String {
+        val s = date.split("-")
+        return "$s[1].$s[0].$s[2]"
     }
 }
